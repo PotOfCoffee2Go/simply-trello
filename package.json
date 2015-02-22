@@ -1,0 +1,25 @@
+{
+  "name": "simply-trello",
+  "version": "0.0.1",
+  "description": "Basic interface to Trello boards, lists, and cards",
+  "main": "example.js",
+  "dependencies": {
+    "node-trello": "^1.0.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/PotOfCoffee2Go/simply-trello"
+  },
+  "keywords": [
+    "trello",
+    "node",
+    "api"
+  ],
+  "author": "Kim McKinley",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/PotOfCoffee2Go/simply-trello/issues"
+  },
+  "homepage": "https://github.com/PotOfCoffee2Go/simply-trello"
+}
