@@ -21,16 +21,17 @@ Two features that are needed but not currently available the ability to locate w
  for simply-trello (maybe in another project `complex-trello` will add setting colors and such :)
 
 Already simply-trello has a good start by using the great [node-trello](https://www.npmjs.com/package/node-trello)
- module on npm as the core interface to Trello.
+ module on npm as the core interface to Trello. Please visit the site if want information about the magic happening
+ under the hood.
 
 ## Quick start
-The `example.js` program in the project home directory will create a Trello board that looks like
- [https://trello.com/b/Rgl3w4pO/simply-trello-api-example](https://trello.com/b/Rgl3w4pO/simply-trello-api-example).
-
 I assume you already have [nodejs](http://nodejs.org/) installed and a [Trello](https://trello.com) account :)
 
-Fork or download code from github at [Simply-Trello](https://github.com/PotOfCoffee2Go/simply-trello)
+### Install
 
+`npm install simply-trello`
+
+### Trello Key and Token
 Your will need your Trello Key and a Token to use simply-trello.
 
 * Browse to [https://trello.com/1/appKey/generate](https://trello.com/1/appKey/generate) that will display your Key. <br />     (the `Secret` is not needed for simply-trello).
@@ -38,7 +39,36 @@ Your will need your Trello Key and a Token to use simply-trello.
     `https://trello.com/1/connect?key=yourKey&name=Simply Trello&response_type=token&expiration=never&scope=read,write`<br /> (and can change the name `Simply Trello` to whatever you want.)
 * `Accept` the token request and your token will be displayed
 
-Open the program `example.js` in an editor and change `yourKey` and `yourToken` to the real key/token
+### Example Code
+
+Will need to replace yourKey and yourToken with... you guessed it your Key and Token
+
+    var simplyTrello = require('simply-trello');
+
+    simplyTrello.send (
+        {key: 'yourKey', token: 'yourToken'},
+        { trello: {
+            path: {
+                board: 'Simply Trello API Example',
+                list: 'From simply-trello Example Code',
+                card: 'The first card from simply trello!'
+            },
+            content: {
+                cardComment: 'A good friend helps you when you fall. A best friend laughs in your face and trips you again!',
+            }
+        }
+    );
+
+The `Simply Trello API Example` board should now show up on your list of Trello boards. Open up the board and should
+ see a list named `From simply-trello Example Code` with a card `The first card from simply trello!` which has a comment.
+
+
+## More info
+
+The `example.js` program in `./node_modules/simply-trello` will create a Trello board that looks like
+ [https://trello.com/b/Rgl3w4pO/simply-trello-api-example](https://trello.com/b/Rgl3w4pO/simply-trello-api-example).
+
+Open the program `example.js` in an editor and change `yourKey` and `yourToken` to the real key/token.
 
     /* Right around line 20 */
     var userAuth = {
@@ -46,13 +76,12 @@ Open the program `example.js` in an editor and change `yourKey` and `yourToken` 
         token: 'yourToken'
     };
 
-Open a command window in the home directory you put simply-trello. 
+Open a command window in `./node_modules/simply-trello` directory you installed simply-trello.
 
-* Type `npm install`
 * Type `node example.js`
 
 Browse to [https://trello.com](https://trello.com) and you should see a `Simply Trello API Example` board in your list
- of Trello boards.
+ of Trello boards. The console will display the requests and responses with Trello.
 
 ## Boards, Lists, and Cards
 

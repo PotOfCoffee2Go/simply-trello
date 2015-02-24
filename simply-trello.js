@@ -20,160 +20,165 @@
  * SubmitBoardRequest, SubmitListRequest, and SubmitCardRequest call NextCallback automatically for you!
  */
 
-module.exports = function (userAuth, trello, cb) {
-    var util = require('util');
+(function () {
 
-    /* List of actions that will be performed on Trello */
-    var callbacklist = [];
+    exports.send = function (userAuth, trello, cb) {
 
-    /* Results that were performed on Trello */
-    var result = {};
+        var util = require('util');
 
-    /* Check that we got everything we need to send to Trello */
-    if (typeof userAuth == 'undefined' ||
-            typeof userAuth.key == 'undefined' ||
-            typeof userAuth.token == 'undefined') {
-        throw new Error('login credentials required');
-    }
+        /* List of actions that will be performed on Trello */
+        var callbacklist = [];
 
-    if (typeof trello == 'undefined' ||
-            typeof trello.path == 'undefined') {
-        throw new Error('Trello card and sub-object path required');
-    }
+        /* Results that were performed on Trello */
+        var result = {};
 
-    if (typeof trello.path.board == 'undefined' ||
-            typeof trello.path.list == 'undefined' ||
-            typeof trello.path.card == 'undefined') {
-        throw new Error('Trello card path to board, list, and card required');
-    }
+        /* Check that we got everything we need to send to Trello */
+        if (typeof userAuth == 'undefined' ||
+                typeof userAuth.key == 'undefined' ||
+                typeof userAuth.token == 'undefined') {
+            throw new Error('login credentials required');
+        }
 
-    /* Don't need a content, but will make it empty */
-    trello.content =  trello.content || {};
+        if (typeof trello == 'undefined' ||
+                typeof trello.path == 'undefined') {
+            throw new Error('Trello card and sub-object path required');
+        }
 
-    /* Update of the board description */
-    if (typeof trello.content.boardDesc != 'undefined') {
-        callbacklist.push(function (err, entry, cbl) {
-            var request = {
-                method: 'PUT',
-                endpoint: '/desc',
-                arguments: {
-                    value: trello.content.boardDesc
-                }
-            };
-            trelloInterface.SubmitBoardRequest(request, entry, function (err, entry) {
-                result.boardDesc = {
-                    request: entry.lastRequest,
-                    response: entry.lastResponse
-                };
-                trelloInterface.NextCallback(err, entry, cbl);
-            });
-        });
-    }
+        if (typeof trello.path.board == 'undefined' ||
+                typeof trello.path.list == 'undefined' ||
+                typeof trello.path.card == 'undefined') {
+            throw new Error('Trello card path to board, list, and card required');
+        }
 
-    /* Update of the card description */
-    if (typeof trello.content.cardDesc != 'undefined') {
-        callbacklist.push(function (err, entry, cbl) {
-            var request = {
-                method: 'PUT',
-                endpoint: '/desc',
-                arguments: {
-                    value: trello.content.cardDesc
-                }
-            };
-            trelloInterface.SubmitCardRequest(request, entry, function (err, entry) {
-                result.cardDesc = {
-                    request: entry.lastRequest,
-                    response: entry.lastResponse
-                };
-                trelloInterface.NextCallback(err, entry, cbl);
-            });
-        });
-    }
+        /* Don't need a content, but will make it empty */
+        trello.content = trello.content || {};
 
-    /* Add card comment */
-    if (typeof trello.content.cardComment != 'undefined') {
-        callbacklist.push(function (err, entry, cbl) {
-            var request = {
-                method: 'POST',
-                endpoint: '/actions/comments',
-                arguments: {
-                    text: trello.content.cardComment
-                }
-            };
-            trelloInterface.SubmitCardRequest(request, entry, function (err, entry) {
-                result.cardComment = {
-                    request: entry.lastRequest,
-                    response: entry.lastResponse
-                };
-                trelloInterface.NextCallback(err, entry, cbl);
-            });
-        });
-    }
-
-    /* Remove card */
-    if (typeof trello.content.cardRemove != 'undefined' && trello.content.cardRemove === true) {
-        var cardNameToDelete = trello.path.card;
-
-        callbacklist.push(function (err, entry, cbl) {
-            // Delete card - see https://trello.com/docs/api/card/index.html#delete-1-cards-card-id-or-shortlink
-            var deleteCard = {
-                name: cardNameToDelete, // Not used by Trello - but I want it in the result
-                id: '',
-                method: 'DELETE'
-            };
-
-            // Find the id of the card from the list see https://trello.com/docs/api/list/index.html#get-1-lists-idlist-cards
-            var findCard = {
-                method: 'GET',
-                endpoint: '/cards',
-                arguments: {
-                    fields: 'name,idList,idBoard'
-                }
-            };
-            trelloInterface.SubmitListRequest(findCard, entry, function (err, entry) {
-                var deleteSent = false;
-                for (var i = 0; i < entry.lastResponse.length && deleteSent === false; i++) {
-                    if (entry.lastResponse[i].name === cardNameToDelete) {
-                        deleteCard.id = entry.lastResponse[i].id;
-                        deleteSent = true;
-                        trelloInterface.SubmitCardRequest(deleteCard, entry, function (err, entry) {
-                            result.cardRemove = {
-                                request: entry.lastRequest,
-                                response: entry.lastResponse
-                            };
-                            trelloInterface.NextCallback(err, entry, cbl);
-                        })
+        /* Update of the board description */
+        if (typeof trello.content.boardDesc != 'undefined') {
+            callbacklist.push(function (err, entry, cbl) {
+                var request = {
+                    method: 'PUT',
+                    endpoint: '/desc',
+                    arguments: {
+                        value: trello.content.boardDesc
                     }
-                }
-                if (deleteSent === false) {
-                    result.cardRemove = {
-                        request: deleteCard,
-                        response: {message: 'Card not found'}
+                };
+                trelloInterface.SubmitBoardRequest(request, entry, function (err, entry) {
+                    result.boardDesc = {
+                        request: entry.lastRequest,
+                        response: entry.lastResponse
                     };
                     trelloInterface.NextCallback(err, entry, cbl);
-                }
+                });
             });
-        });
-    }
+        }
 
-    /* End the callback chain with the callers callback */
-    if (typeof cb === 'function') {
-        callbacklist.push(function (err, entry, finalcb) {
-            if (err) {
-                result.error = {
-                    message: err.message,
-                    stack: err.stack
+        /* Update of the card description */
+        if (typeof trello.content.cardDesc != 'undefined') {
+            callbacklist.push(function (err, entry, cbl) {
+                var request = {
+                    method: 'PUT',
+                    endpoint: '/desc',
+                    arguments: {
+                        value: trello.content.cardDesc
+                    }
+                };
+                trelloInterface.SubmitCardRequest(request, entry, function (err, entry) {
+                    result.cardDesc = {
+                        request: entry.lastRequest,
+                        response: entry.lastResponse
+                    };
+                    trelloInterface.NextCallback(err, entry, cbl);
+                });
+            });
+        }
+
+        /* Add card comment */
+        if (typeof trello.content.cardComment != 'undefined') {
+            callbacklist.push(function (err, entry, cbl) {
+                var request = {
+                    method: 'POST',
+                    endpoint: '/actions/comments',
+                    arguments: {
+                        text: trello.content.cardComment
+                    }
+                };
+                trelloInterface.SubmitCardRequest(request, entry, function (err, entry) {
+                    result.cardComment = {
+                        request: entry.lastRequest,
+                        response: entry.lastResponse
+                    };
+                    trelloInterface.NextCallback(err, entry, cbl);
+                });
+            });
+        }
+
+        /* Remove card */
+        if (typeof trello.content.cardRemove != 'undefined' && trello.content.cardRemove === true) {
+            var cardNameToDelete = trello.path.card;
+
+            callbacklist.push(function (err, entry, cbl) {
+                // Delete card - see https://trello.com/docs/api/card/index.html#delete-1-cards-card-id-or-shortlink
+                var deleteCard = {
+                    name: cardNameToDelete, // Not used by Trello - but I want it in the result
+                    id: '',
+                    method: 'DELETE'
                 };
 
-            }
-            cb(err, result);
-        });
+                // Find the id of the card from the list see https://trello.com/docs/api/list/index.html#get-1-lists-idlist-cards
+                var findCard = {
+                    method: 'GET',
+                    endpoint: '/cards',
+                    arguments: {
+                        fields: 'name,idList,idBoard'
+                    }
+                };
+                trelloInterface.SubmitListRequest(findCard, entry, function (err, entry) {
+                    var deleteSent = false;
+                    for (var i = 0; i < entry.lastResponse.length && deleteSent === false; i++) {
+                        if (entry.lastResponse[i].name === cardNameToDelete) {
+                            deleteCard.id = entry.lastResponse[i].id;
+                            deleteSent = true;
+                            trelloInterface.SubmitCardRequest(deleteCard, entry, function (err, entry) {
+                                result.cardRemove = {
+                                    request: entry.lastRequest,
+                                    response: entry.lastResponse
+                                };
+                                trelloInterface.NextCallback(err, entry, cbl);
+                            })
+                        }
+                    }
+                    if (deleteSent === false) {
+                        result.cardRemove = {
+                            request: deleteCard,
+                            response: {message: 'Card not found'}
+                        };
+                        trelloInterface.NextCallback(err, entry, cbl);
+                    }
+                });
+            });
+        }
+
+        /* End the callback chain with the callers callback */
+        if (typeof cb === 'function') {
+            callbacklist.push(function (err, entry, finalcb) {
+                if (err) {
+                    result.error = {
+                        message: err.message,
+                        stack: err.stack
+                    };
+
+                }
+                cb(err, result);
+            });
+        }
+
+        // Login to Trello
+        var trelloInterface = require('./trello/trello.js').Login(userAuth.key, userAuth.token);
+
+        // Process the requests for this Trello card
+        trelloInterface.Entry(trello.path, callbacklist);
+
     }
 
-    // Login to Trello
-    var trelloInterface = require('./trello/trello.js').Login(userAuth.key, userAuth.token);
-
-    // Process the requests for this Trello card
-    trelloInterface.Entry(trello.path, callbacklist);
-
-};
+}());
