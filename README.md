@@ -95,7 +95,6 @@ The `userAuth` and `trello` objects are passed to the `trelloapi` function which
         console.log(util.inspect(result, {depth: null}));
     });
 
-
 ## Comments
 You only need to provide the information in the `content` that you wish to update. A common task is to add a comment to
  an existing card. The `path` must always contain the board, list, and card but only the `cardComment` field is required
@@ -106,15 +105,18 @@ You only need to provide the information in the `content` that you wish to updat
     }
 
 ## Descriptions
-Similar to card comments a description of the board or card can be given in the `content` object. The contents of
+Similar to card comments a description of the board and/or card can be given in the `content` object. The contents of
  the description field will replace the current description, if any.
 
 ## Removing a card
 If the `content` object `cardRemove` field is present and set to true, the card will be removed from the board.
+
+    content: {
+        cardRemove: false
+    }
 
 ## Result of the requests and responses with Trello
 
 Because the Trello API calls are asynchronous, a callback can be provided in the call to './trello/trelloapi'
  along with the customary nodejs `err` error parameter and a `result` object which is a JSON representation of
  the requests and responses with trello. The `example.js` program displays the result on the console.
- 

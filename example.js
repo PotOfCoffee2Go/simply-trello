@@ -10,7 +10,7 @@ var util = require('util');
  * The Trello interface requires your Key and a token
  * In a web browser go to 'https://trello.com/1/appKey/generate' that will display yourKey
  * Change 'yourKey' in the link below with your Key, then in a web browser go to
- *   'https://trello.com/1/connect?key=yourKey&name=MyProjectName&response_type=token&expiration=never&scope=read,write'
+ *   'https://trello.com/1/connect?key=yourKey&name=Simply Trello&response_type=token&expiration=never&scope=read,write'
  *   accept it - and it will display a token
  * Use yourKey and the token below
  *
