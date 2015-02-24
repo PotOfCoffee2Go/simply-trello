@@ -53,6 +53,6 @@ var trello = {
  * Create or update the Trello card
  * @returns JSON object of interaction with Trello for each 'content' activity done on card
  */
-require('./trello/trelloapi')(userAuth, trello, function (err, result) {
+require('./simply-trello')(userAuth, trello, function (err, result) {
     console.log(util.inspect(result, {depth: null}));
 });

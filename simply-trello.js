@@ -171,7 +171,7 @@ module.exports = function (userAuth, trello, cb) {
     }
 
     // Login to Trello
-    var trelloInterface = require('./trello.js').Login(userAuth.key, userAuth.token);
+    var trelloInterface = require('./trello/trello.js').Login(userAuth.key, userAuth.token);
 
     // Process the requests for this Trello card
     trelloInterface.Entry(trello.path, callbacklist);
