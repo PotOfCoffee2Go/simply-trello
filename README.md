@@ -74,7 +74,7 @@ The `var trello` object contains two subobjects, `path` and `content`. The path 
             card: 'The first card from simply trello!'
         },
 
-While the content has the description and card comment texts. The content object also contains a flag that is
+The `content` has the description and card comment texts. The content object also contains a flag that is
  used if you wish to delete the card.
 
         content: {
@@ -95,5 +95,26 @@ The `userAuth` and `trello` objects are passed to the `trelloapi` function which
         console.log(util.inspect(result, {depth: null}));
     });
 
-Because the Trello API calls are asynconous a callback can be provided which returns an object containing the
- request/response information that simply-trello performed with Trello.
+
+## Comments
+You only need to provide the information in the `content` that you wish to update. A common task is to add a comment to
+ an existing card. The `path` must always contain the board, list, and card but only the `cardComment` field is required
+ in the `content` object. The comment will be added to the existing comments on the card.
+
+    content: {
+        cardComment: 'A good friend helps you when you fall. A best friend laughs in your face and trips you again!',
+    }
+
+## Descriptions
+Similar to card comments a description of the board or card can be given in the `content` object. The contents of
+ the description field will replace the current description, if any.
+
+## Removing a card
+If the `content` object `cardRemove` field is present and set to true, the card will be removed from the board.
+
+## Result of the requests and responses with Trello
+
+Because the Trello API calls are asynchronous, a callback can be provided in the call to './trello/trelloapi'
+ along with the customary nodejs `err` error parameter and a `result` object which is a JSON representation of
+ the requests and responses with trello. The `example.js` program displays the result on the console.
+ 
