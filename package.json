@@ -1,6 +1,6 @@
 {
   "name": "simply-trello",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Basic interface to Trello boards, lists, and cards",
   "main": "simply-trello.js",
   "dependencies": {

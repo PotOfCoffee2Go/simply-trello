@@ -1,24 +1,21 @@
-# simply-trello
+# Simply-Trello
 A basic interface to Trello boards, lists, and cards. 
 
+## Why Simply-Trello
 I wanted my programs to be able to report on Trello events that needed attention by the team assigned to the board.
- The handling of the board/lists/cards from that point are done by team members through the regular Trello website.
+ The handling of the cards from that point are done by team members through the regular Trello website.
 
-Simply-trello is not intended to provide a full Trello API feature set - but to provide a simple way of getting
- a card onto Trello.
+Simply-trello is not intended to provide a full Trello API feature set - but to provide a simple, data driven way
+ of getting a card onto Trello or add a comment to an existing card.
 
-### So...
- I needed to be able to :
+### Why Simply-Trello
+ I needed to be able to easily :
 
 * Create/update a board and the board's lists
 * Add a card to a board's list
 * Add/update the description for a board and card
 * Add a comment to a card
 * Delete a card from a board's list
-
-Two features that are needed but not currently available the ability to locate which list a card is in, and moving
- a card from one list to another - these will be implemented in the future - which should complete the feature set
- for simply-trello (maybe in another project `complex-trello` will add setting colors and such :)
 
 Already simply-trello has a good start by using the great [node-trello](https://www.npmjs.com/package/node-trello)
  module on npm as the core interface to Trello. Please visit the site if want information about the magic happening
@@ -39,18 +36,19 @@ Your will need your Trello Key and a Token to use simply-trello.
     `https://trello.com/1/connect?key=yourKey&name=Simply Trello&response_type=token&expiration=never&scope=read,write`<br /> (and can change the name `Simply Trello` to whatever you want.)
 * `Accept` the token request and your token will be displayed
 
-### Example Code
+### Quick Code
 
-Will need to replace yourKey and yourToken with... you guessed it your Key and Token
+Create a `try-simply-trello.js` file with the following code.  You will need to replace yourKey and yourToken with...
+ you guessed it... your Key and Token. Run it `node try-simply-trello.js`
 
     var simplyTrello = require('simply-trello');
 
     simplyTrello.send (
-        {key: 'yourKey', token: 'yourToken'},
-        { trello: {
+        {key: 'yourKey', token: 'yourKey'},
+        {
             path: {
-                board: 'Simply Trello API Example',
-                list: 'From simply-trello Example Code',
+                board: 'Simply Trello API test of example',
+                list: 'From simply-trello Example Code nbr 2',
                 card: 'The first card from simply trello!'
             },
             content: {
@@ -59,8 +57,9 @@ Will need to replace yourKey and yourToken with... you guessed it your Key and T
         }
     );
 
-The `Simply Trello API Example` board should now show up on your list of Trello boards. Open up the board and should
- see a list named `From simply-trello Example Code` with a card `The first card from simply trello!` which has a comment.
+Go to [https://trello.com](https://trello.com) The `Simply Trello API Example` board should now show up on your list
+ of Trello boards. Open up the board and should see a list named `From simply-trello Example Code` with a card
+ `The first card from simply trello!` which has a comment.
 
 
 ## More info
@@ -124,7 +123,7 @@ The `userAuth` and `trello` objects are passed to the `trelloapi` function which
         console.log(util.inspect(result, {depth: null}));
     });
 
-## Comments
+### Comments
 You only need to provide the information in the `content` that you wish to update. A common task is to add a comment to
  an existing card. The `path` must always contain the board, list, and card but only the `cardComment` field is required
  in the `content` object. The comment will be added to the existing comments on the card.
@@ -133,19 +132,28 @@ You only need to provide the information in the `content` that you wish to updat
         cardComment: 'A good friend helps you when you fall. A best friend laughs in your face and trips you again!',
     }
 
-## Descriptions
+### Descriptions
 Similar to card comments a description of the board and/or card can be given in the `content` object. The contents of
  the description field will replace the current description, if any.
 
-## Removing a card
+### Removing a card
 If the `content` object `cardRemove` field is present and set to true, the card will be removed from the board.
 
     content: {
         cardRemove: false
     }
 
-## Result of the requests and responses with Trello
+## Result of Trello requests and responses
 
 Because the Trello API calls are asynchronous, a callback can be provided in the call to './trello/trelloapi'
  along with the customary nodejs `err` error parameter and a `result` object which is a JSON representation of
  the requests and responses with trello. The `example.js` program displays the result on the console.
+
+## What's next
+Two features that are needed but not currently available are to be able to locate which list a card is in, and to be
+ able to move a card from one list to another - these will be implemented in the future - which should complete the
+ core feature set for simply-trello
+
+
+ Enjoy! :)
+
