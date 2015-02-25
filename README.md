@@ -47,9 +47,9 @@ Create a `try-simply-trello.js` file with the following code.  You will need to 
         {key: 'yourKey', token: 'yourKey'},
         {
             path: {
-                board: 'Simply Trello API test of example',
-                list: 'From simply-trello Example Code nbr 2',
-                card: 'The first card from simply trello!'
+                board: 'Simply Trello API Example',
+                list: 'From simply-trello Example Code',
+                card: 'The first example card from simply trello!'
             },
             content: {
                 cardComment: 'A good friend helps you when you fall. A best friend laughs in your face and trips you again!',
@@ -59,7 +59,7 @@ Create a `try-simply-trello.js` file with the following code.  You will need to 
 
 Go to [https://trello.com](https://trello.com) The `Simply Trello API Example` board should now show up on your list
  of Trello boards. Open up the board and should see a list named `From simply-trello Example Code` with a card
- `The first card from simply trello!` which has a comment.
+ `The first example card from simply trello!` which also has a comment.
 
 
 ## More info
@@ -113,13 +113,13 @@ The `content` has the description and card comment texts. The content object als
         }
     };
 
-The `userAuth` and `trello` objects are passed to the `trelloapi` function which sets up and executes the sequence of
- Trello API commands required to create or update the board, list, and card given in the path - as well as update
- descriptions and comment if given. To add multiple comments to a card the `trelloapi` would have to be called
- again with the new comment.
+The `userAuth` and `trello` objects are passed to the `simplyTrello.send` function which sets up and executes the
+ sequence of Trello API commands required to create or update the board, list, and card given in the path -
+ as well as update descriptions and comment if given. To add multiple comments to a card the `simplyTrello.send`
+ would have to be called again with the new comment.
 
-
-    require('./trello/trelloapi')(userAuth, trello, function (err, result) {
+    var simplyTrello = require('./simply-trello');
+    simplyTrello.send (userAuth, trello, function (err, result) {
         console.log(util.inspect(result, {depth: null}));
     });
 
