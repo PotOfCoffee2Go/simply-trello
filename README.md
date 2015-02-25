@@ -8,7 +8,7 @@ I wanted my programs to be able to report on Trello events that needed attention
 Simply-trello is not intended to provide a full Trello API feature set - but to provide a simple, data driven way
  of getting a card onto Trello or add a comment to an existing card.
 
-### Why Simply-Trello
+### So...
  I needed to be able to easily :
 
 * Create/update a board and the board's lists
@@ -44,7 +44,7 @@ Create a `try-simply-trello.js` file with the following code.  You will need to 
     var simplyTrello = require('simply-trello');
 
     simplyTrello.send (
-        {key: 'yourKey', token: 'yourKey'},
+        {key: 'yourKey', token: 'yourToken'},
         {
             path: {
                 board: 'Simply Trello API Example',
@@ -125,8 +125,8 @@ The `userAuth` and `trello` objects are passed to the `simplyTrello.send` functi
 
 ### Comments
 You only need to provide the information in the `content` that you wish to update. A common task is to add a comment to
- an existing card. The `path` must always contain the board, list, and card but only the `cardComment` field is required
- in the `content` object. The comment will be added to the existing comments on the card.
+ an existing card. The `path` must always contain the board, list, and card but in this case only the `cardComment`
+ field is required in the `content` object. The comment will be added to the existing comments on the card.
 
     content: {
         cardComment: 'A good friend helps you when you fall. A best friend laughs in your face and trips you again!',
@@ -140,12 +140,12 @@ Similar to card comments a description of the board and/or card can be given in 
 If the `content` object `cardRemove` field is present and set to true, the card will be removed from the board.
 
     content: {
-        cardRemove: false
+        cardRemove: true
     }
 
 ## Result of Trello requests and responses
 
-Because the Trello API calls are asynchronous, a callback can be provided in the call to './trello/trelloapi'
+Because the Trello API calls are asynchronous, a callback can be provided in the call to `simplyTrello.send`
  along with the customary nodejs `err` error parameter and a `result` object which is a JSON representation of
  the requests and responses with trello. The `example.js` program displays the result on the console.
 
