@@ -1,6 +1,8 @@
 # Simply-Trello
 A basic interface to Trello boards, lists, and cards. 
 
+[![NPM](https://nodei.co/npm/simply-trello.png)](https://nodei.co/npm/simply-trello/)
+
 ## Why Simply-Trello
 I wanted my programs to be able to report on Trello events that needed attention by the team assigned to the board.
  The handling of the cards from that point are done by team members through the regular Trello website.
