@@ -93,6 +93,26 @@
             });
         }
 
+        /* Add card labels by color */
+        if (typeof trello.content.cardLabelColors != 'undefined') {
+            callbacklist.push(function (err, entry, cbl) {
+                var request = {
+                    method: 'PUT',
+                    endpoint: '/labels',
+                    arguments: {
+                        value: trello.content.cardLabelColors
+                    }
+                };
+                trelloInterface.SubmitCardRequest(request, entry, function (err, entry) {
+                    result.cardLabelColors = {
+                        request: entry.lastRequest,
+                        response: entry.lastResponse
+                    };
+                    trelloInterface.NextCallback(err, entry, cbl);
+                });
+            });
+        }
+
         /* Add card comment */
         if (typeof trello.content.cardComment != 'undefined') {
             callbacklist.push(function (err, entry, cbl) {

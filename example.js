@@ -39,13 +39,15 @@ var trello = {
      *  cardDesc will add or change the cards description
      *  cardComment will add a comment to the card
      *  cardRemove true will delete the card from Trello
-     * @type {{boardDesc: string, cardDesc: string, cardComment: string, cardRemove: boolean}}
+     *  cardLabelColors will add label(s) to your card
+     * @type {{boardDesc: string, cardDesc: string, cardComment: string, cardRemove: boolean, cardLabelColors: string}}
      */
     content: {
         boardDesc: 'This board was created from the simply-trello program on github at https://github.com/PotOfCoffee2Go/simply-trello',
         cardDesc: 'The first card is always the toughest',
         cardComment: 'A good friend helps you when you fall. A best friend laughs in your face and trips you again!',
-        cardRemove: false
+        cardRemove: false,
+        cardLabelColors: 'blue,green'
     }
 };
 
