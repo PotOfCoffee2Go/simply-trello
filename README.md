@@ -4,7 +4,7 @@ A basic interface to Trello boards, lists, and cards.
 [![NPM](https://nodei.co/npm/simply-trello.png)](https://nodei.co/npm/simply-trello/)
 
 ## Why Simply-Trello
-I wanted my programs to be able to report on Trello events that needed attention by the team assigned to the board.
+I wanted my programs to be able to report events onto Trello that needed attention by the team assigned to the board.
  The handling of the cards from that point are done by team members through the regular Trello website.
 
 Simply-trello is not intended to provide a full Trello API feature set - but to provide a simple, data driven way
@@ -104,13 +104,14 @@ The `var trello` object contains two subobjects, `path` and `content`. The path 
             card: 'The first card from simply trello!'
         },
 
-The `content` has the description and card comment texts. The content object also contains a flag that is
+The `content` has the description, card comment texts, and card label colors. The content object also contains a flag that is
  used if you wish to delete the card.
 
         content: {
             boardDesc: 'This board was created from the simply-trello program',
             cardDesc: 'The first card is always the toughest',
             cardComment: 'A good friend helps you when you fall. A best friend laughs in your face and trips you again!',
+            cardLabelColors: 'blue,green'
             cardRemove: false
         }
     };
@@ -137,6 +138,14 @@ You only need to provide the information in the `content` that you wish to updat
 ### Descriptions
 Similar to card comments a description of the board and/or card can be given in the `content` object. The contents of
  the description field will replace the current description, if any.
+
+### Label Colors
+Card label colors can be added by providing the optional `cardLabelColors` field in the `content` object. 
+Multiple colors can be added by using a comma between the colors.
+
+    content: {
+        cardLabelColors: 'blue,green'
+    }
 
 ### Removing a card
 If the `content` object `cardRemove` field is present and set to true, the card will be removed from the board.

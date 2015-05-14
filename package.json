@@ -1,6 +1,6 @@
 {
   "name": "simply-trello",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Basic interface to Trello boards, lists, and cards",
   "main": "simply-trello.js",
   "dependencies": {
@@ -17,6 +17,10 @@
     "api"
   ],
   "author": "Kim McKinley",
+  "contributors": [{
+    "name": "James Gally",
+    "url": "https://github.com/JamesGally"
+  }],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/PotOfCoffee2Go/simply-trello/issues"
