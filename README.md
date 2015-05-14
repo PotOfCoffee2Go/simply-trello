@@ -111,7 +111,7 @@ The `content` has the description, card comment texts, and card label colors. Th
             boardDesc: 'This board was created from the simply-trello program',
             cardDesc: 'The first card is always the toughest',
             cardComment: 'A good friend helps you when you fall. A best friend laughs in your face and trips you again!',
-            cardLabelColors: 'blue,green'
+            cardLabelColors: 'blue,green',
             cardRemove: false
         }
     };
